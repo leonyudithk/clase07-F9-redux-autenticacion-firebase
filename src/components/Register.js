@@ -1,18 +1,41 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useForm } from '../Hooks/useForm';
+import { registerAsync } from '../Redux/actions/actionRegister';
 
 const Register = () => {
+    const dispatch = useDispatch()
+
+    const [values, handleInputChange, reset] = useForm({
+        nombre: '',
+        email: '',
+        pass1: '',
+        pass2: ''
+    })
+
+    const {nombre, email, pass1, pass2} = values
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(values)
+        dispatch(registerAsync(email, pass1, nombre))
+        reset()
+    }
+    
     return (
         <div>
-            <Form >
+            <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicName">
                     <Form.Label>Nombre</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter name"
                         name="nombre"
-                       
+                        value={nombre}
+                        onChange={handleInputChange}
+                      
                     />
                 </Form.Group>
 
@@ -22,7 +45,9 @@ const Register = () => {
                         type="email"
                         placeholder="email"
                         name="email"
-                  
+                        value={email}
+                        onChange={handleInputChange}
+                      
                   
                     />
                 </Form.Group>
@@ -33,7 +58,8 @@ const Register = () => {
                         type="password"
                         placeholder="Password"
                         name="pass1"
-                       
+                        value={pass1}
+                        onChange={handleInputChange}
                   
                     />
                 </Form.Group>
@@ -44,6 +70,8 @@ const Register = () => {
                         type="password"
                         placeholder="Password"
                         name="pass2"
+                        value={pass2}
+                        onChange={handleInputChange}
                      
                     />
                 </Form.Group>
@@ -53,7 +81,7 @@ const Register = () => {
                     Registrarse
                 </Button>
 
-                <Link to="/">Login</Link>
+                <Link to="/login">Login</Link>
 
             </Form>
 

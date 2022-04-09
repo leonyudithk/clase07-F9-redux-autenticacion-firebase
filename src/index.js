@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { Provider } from 'react-redux';
+import { store } from './Redux/store/store';
 import AppRouters from './routers/AppRouters';
 
-
 ReactDOM.render(
-  
-    <AppRouters/>,
+    <Provider store={store}>
+         <AppRouters/>
+    </Provider>,
     document.getElementById('root')
   );
+
+
 
